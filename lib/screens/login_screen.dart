@@ -81,18 +81,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterPage()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterPage(),
+                    ),
+                  );
                 },
-                // onPressed: () {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const RegisterPage(),
-                //     ),
-                //   );
-                // },
                 child: const Text('Register'),
               ),
             ),

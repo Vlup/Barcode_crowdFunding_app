@@ -1,3 +1,4 @@
+import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -19,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical:20.0),
+        padding: const EdgeInsets.symmetric(vertical:100.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -27,9 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Expanded(
                 child: Image.asset(
-                  "images/Logo.png",
-                  width: 160,
-                  height: 160,
+                  "images/Logo.png"
                 ),
               ),
               Padding(
@@ -118,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: const Text(
                                 "Register",
                                 style:
-                                    TextStyle(fontSize: 25, color: Colors.white),
+                                    TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             )),
                         Row(
@@ -127,12 +126,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             const Text("Already have an account ?"),
                             TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  "Login",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(129, 199, 132, 1)),
-                                ))
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(129, 199, 132, 1)),
+                              )
+                            )
                           ],
                         )
                       ],
