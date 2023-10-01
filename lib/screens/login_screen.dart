@@ -1,4 +1,5 @@
 import 'package:crowdfunding/screens/base_screen.dart';
+import 'package:crowdfunding/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Image.asset('images/Logo.png'),
             const Text('halo'),
-            // Create login page 
+            // Create login page
             SizedBox(
               width: 250,
               height: 40,
@@ -53,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const Padding(padding: EdgeInsets.all(5)),
-            const Text('Not Registered?', style: TextStyle(color: Colors.black),),
+            const Text(
+              'Not Registered?',
+              style: TextStyle(color: Colors.black),
+            ),
             const Padding(padding: EdgeInsets.all(5)),
             // Button to register page
             SizedBox(
@@ -61,8 +65,10 @@ class _LoginPageState extends State<LoginPage> {
               height: 40,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  foregroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(129, 199, 132, 1)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromRGBO(129, 199, 132, 1)),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -73,7 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPage()));
+                },
                 // onPressed: () {
                 //   Navigator.push(
                 //     context,
