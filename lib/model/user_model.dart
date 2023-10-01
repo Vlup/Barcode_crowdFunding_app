@@ -2,7 +2,7 @@ class UserModel {
   final String? id;
   final String name;
   final String email;
-  final String phoneNumber;
+  final String? phoneNumber;
   final String password;
   final String? aboutMe;
   final String? identityPath;
@@ -13,7 +13,7 @@ class UserModel {
     this.id,
     required this.name,
     required this.email,
-    required this.phoneNumber,
+    this.phoneNumber,
     required this.password,
     this.aboutMe,
     this.identityPath,
@@ -23,6 +23,7 @@ class UserModel {
 
   toJson() {
     return {
+      "id": id,
       "name": name,
       "email": email,
       "phone_number": phoneNumber,
