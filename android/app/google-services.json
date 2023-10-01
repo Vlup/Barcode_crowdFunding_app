@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456806415408",
+    "project_id": "crowdfunding-project-b2944",
+    "storage_bucket": "crowdfunding-project-b2944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456806415408:android:dd4f126a504328225281f5",
+        "android_client_info": {
+          "package_name": "com.example.crowdfunding"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbL0V8GQowUq7UhbZBf-Sj0mjJaVrQUJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

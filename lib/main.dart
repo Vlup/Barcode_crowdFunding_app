@@ -1,7 +1,18 @@
 import 'package:crowdfunding/screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDbL0V8GQowUq7UhbZBf-Sj0mjJaVrQUJo", 
+      appId: "1:456806415408:android:dd4f126a504328225281f5", 
+      messagingSenderId: "456806415408", 
+      projectId: "crowdfunding-project-b2944",
+    )
+  );
+
   runApp(const MyApp());
 }
 
