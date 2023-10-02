@@ -86,6 +86,16 @@ class _BasePageState extends State<BasePage> {
       body: SingleChildScrollView(
         child: _selectedPage[_selectedIndex],
       ),
+      floatingActionButton: _selectedIndex == 2 ? FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const LoginPage()));
+        },
+        child: const Icon(Icons.edit),
+      ) : Container(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         backgroundColor: const Color.fromRGBO(243, 237, 247, 1.0),

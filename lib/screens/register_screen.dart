@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crowdfunding/model/user_model.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -11,10 +11,67 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmpasswordController = TextEditingController();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+    emailController.dispose();
+    super.dispose();
+    passwordController.dispose();
+    super.dispose();
+    confirmpasswordController.dispose();
+    super.dispose();
+  }
+
+  bool isRegisterButtonEnabled() {
+    final name = nameController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+    final confirmPassword = confirmpasswordController.text;
+
+    return name.isNotEmpty &&
+      email.isNotEmpty &&
+      password.isNotEmpty &&
+      confirmPassword.isNotEmpty &&
+      (password == confirmPassword);
+  }
+
+  Future<void> createUser() async {
+    final dbUser = FirebaseFirestore.instance.collection('users').doc();
+    String docID = dbUser.id;
+    final user = UserModel(
+      id: docID,
+      name: nameController.text, 
+      email: emailController.text,
+      password: passwordController.text, 
+      isVerified: false
+    );
+    await dbUser.set(user.toJson()).then((value) {
+      nameController.text = '';
+      emailController.text = '';
+      passwordController.text = '';
+      confirmpasswordController.text = '';
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Successfully Registered!'),
+          duration: Duration(milliseconds: 2000)
+        )
+      );
+    });
+  }
+
+  void onRegisterButtonPressed(BuildContext context) {
+    if (isRegisterButtonEnabled()) {
+      createUser();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       const Color.fromRGBO(129, 199, 132, 1)),
-                              onPressed: () {},
+                              onPressed: () => onRegisterButtonPressed(context),
                               child: const Text(
                                 "Register",
                                 style:
