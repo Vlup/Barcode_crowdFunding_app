@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
       stream: FirebaseFirestore.instance.collection('users').doc(docId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         final data = snapshot.data!.data() as Map<String, dynamic>;
@@ -79,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: data['identity_path'] != null ? Image.asset(data['identity_path']) : Container(),
-                      // child: Image.asset('images/identity_card_example.jpeg'),
                     ),
                   ],
                 ),
