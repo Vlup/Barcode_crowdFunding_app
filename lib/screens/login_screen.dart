@@ -71,105 +71,111 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              "images/Logo.png",
-            ),
-            Container(
-              width: 315,
-              height: 310,
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(10),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical:50.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "images/Logo.png",
               ),
-              child: Center(
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 10),
-                      child: Text(
-                        "Login", // Updated text to "Login"
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: SizedBox(
-                        width: 242,
-                        height: 56,
-                        child: TextField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Email',
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
-                      child: SizedBox(
-                        width: 242,
-                        height: 56,
-                        child: TextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Password',
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 242,
-                      height: 56,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
-                        ),
-                        onPressed: () => onLoginButtonPressed(context),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Container(
+                  width: 315,
+                  height: 310,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Column(
                       children: [
-                        const Text("Not registered?"),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterPage(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            "Register",
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20.0, bottom: 10),
+                          child: Text(
+                            "Login", // Updated text to "Login"
                             style: TextStyle(
-                              color: Color.fromRGBO(129, 199, 132, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: SizedBox(
+                            width: 242,
+                            height: 56,
+                            child: TextField(
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Email',
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                          child: SizedBox(
+                            width: 242,
+                            height: 56,
+                            child: TextField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Password',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 242,
+                          height: 56,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
+                            ),
+                            onPressed: () => onLoginButtonPressed(context),
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Not registered?"),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const RegisterPage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Register",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(129, 199, 132, 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
