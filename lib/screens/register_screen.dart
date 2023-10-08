@@ -83,6 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Expanded(
                 child: Image.asset(
                   "images/Logo.png"
+                  // "assets/images/Logo.png"    - NB: use this one when build apk 
                 ),
               ),
               Padding(
