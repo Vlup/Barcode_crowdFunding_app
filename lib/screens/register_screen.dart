@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical:100.0),
+        padding: const EdgeInsets.symmetric(vertical:50.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
