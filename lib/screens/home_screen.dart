@@ -8,14 +8,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: const [
-          Text('Home page will be added later'),
-        ],
-      ),
+      child: Text('test'),
     );
   }
 }
