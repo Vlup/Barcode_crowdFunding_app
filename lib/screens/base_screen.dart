@@ -1,4 +1,5 @@
 import 'package:crowdfunding/screens/discovery_screen.dart';
+import 'package:crowdfunding/screens/edit_screen.dart';
 import 'package:crowdfunding/screens/home_screen.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:crowdfunding/screens/profile_screen.dart';
@@ -36,32 +37,29 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pageNames[_selectedIndex]),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage()
-                        )
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: const [
+          title: Text(_pageNames[_selectedIndex]),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
+          actions: [
+            PopupMenuButton(
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(children: const [
                             Icon(
                               Icons.logout_outlined,
                               color: Colors.black,
@@ -73,29 +71,16 @@ class _BasePageState extends State<BasePage> {
                                 color: Colors.black,
                               ),
                             ),
-                          ]
+                          ]),
                         ),
                       ),
-                  ),
-                ),
-              ];
-            }
-          )
-        ]
-      ),
+                    ),
+                  ];
+                })
+          ]),
       body: SingleChildScrollView(
         child: _selectedPage[_selectedIndex],
       ),
-      floatingActionButton: _selectedIndex == 2 ? FloatingActionButton(
-        backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const LoginPage()));
-        },
-        child: const Icon(Icons.edit),
-      ) : Container(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         backgroundColor: const Color.fromRGBO(243, 237, 247, 1.0),
