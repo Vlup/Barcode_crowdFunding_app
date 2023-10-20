@@ -1,6 +1,8 @@
 import 'package:crowdfunding/model/alphavantage.dart';
+import 'package:crowdfunding/provider/setting_theme.dart';
 import 'package:crowdfunding/widget/detail_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -31,6 +33,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
 
   @override
   Widget build(BuildContext context) {
+    final setting = Provider.of<ThemeModeProvider>(context);
+
     return Center(
       child: isLoading 
       ? const CircularProgressIndicator()
@@ -48,11 +52,11 @@ class _DiscoverPageState extends State<DiscoverPage> {
             },
             leading: CircleAvatar(
               radius: 20,
-              backgroundColor: Colors.black,
-              child: Text((index+1).toString(), style: const TextStyle(color: Colors.white),),
+              backgroundColor: setting.textColor,
+              child: Text((index+1).toString(), style: TextStyle(color: setting.backgroundColor),),
             ),
-            title: Text(match['2. name']),
-            subtitle: Text('Symbol: ${match['1. symbol']}'),
+            title: Text(match['2. name'], style: TextStyle(color: setting.textColor),),
+            subtitle: Text('Symbol: ${match['1. symbol']}', style: TextStyle(color: setting.textColor),),
           );
         }
       ),

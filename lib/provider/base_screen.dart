@@ -3,7 +3,6 @@ import 'package:crowdfunding/screens/discovery_screen.dart';
 import 'package:crowdfunding/screens/home_screen.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:crowdfunding/screens/profile_screen.dart';
-import 'package:crowdfunding/screens/setting_screen.dart';
 import 'package:crowdfunding/widget/edit_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +40,6 @@ class _BasePageState extends State<BasePage> {
     const String docId = 'uqtyFrpmKyJzf3BT4MiQ';
     final setting = Provider.of<ThemeModeProvider>(context);
     return Scaffold(
-      backgroundColor: setting.backgroundColor,
       appBar: AppBar(
           title: Text(_pageNames[_selectedIndex]),
           automaticallyImplyLeading: false,
@@ -56,56 +54,29 @@ class _BasePageState extends State<BasePage> {
                 itemBuilder: (BuildContext context) {
                   return [
                     PopupMenuItem(
-                      child: Column(
-                        children: [TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Row(children:  [
-                              Icon(
-                                Icons.logout_outlined,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: const Row(children:  [
+                            Icon(
+                              Icons.logout_outlined,
+                              color: Colors.black,
+                            ),
+                            Padding(padding: EdgeInsets.only(left: 10)),
+                            Text(
+                              'Logout',
+                              style: TextStyle(
                                 color: Colors.black,
                               ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
-                              Text(
-                                'Logout',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ]),
-                          ),
+                            ),
+                          ]),
                         ),
-                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SettingPage()));
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Row(children:  [
-                              Icon(
-                                Icons.settings,
-                                color: Colors.black,
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
-                              Text(
-                                'Setting',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ]),
-                          ),
-                         )
-                        ]
                       ),
                     ),
                   ];
@@ -122,7 +93,7 @@ class _BasePageState extends State<BasePage> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return EditProfileDialog(docId: docId);
+                  return EditProfileDialog(docId: docId); // Pass the docId to the dialog
                 },
             );
           },
