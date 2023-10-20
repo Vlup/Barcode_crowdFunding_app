@@ -14,9 +14,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(docId)
-            .snapshots(),
+          .collection('users')
+          .doc(docId)
+          .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -40,92 +40,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5, left: 50, right: 50),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              data['name'] ?? '',
-                              style: const TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.w500),
-                            ),
-                            GestureDetector(
-                              child: const Icon(
-                                Icons.edit,
-                              ),
-                              onTap: () {
-                                // Tampilkan dialog pengeditan untuk memungkinkan pengguna mengubah data
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    // Gunakan TextEditingController untuk mengambil input pengguna
-                                    TextEditingController nameController =
-                                        TextEditingController(
-                                            text: data['name']);
-                                    TextEditingController addressController =
-                                        TextEditingController(
-                                            text: data['address']);
-                                    TextEditingController
-                                        identityPathController =
-                                        TextEditingController(
-                                            text: data['identity_path']);
-                                    TextEditingController aboutMeController =
-                                        TextEditingController(
-                                            text: data['about_me']);
-
-                                    return AlertDialog(
-                                      title: const Text("Edit Profile"),
-                                      content: Column(
-                                        children: <Widget>[
-                                          TextField(
-                                            controller: nameController,
-                                            decoration: const InputDecoration(
-                                                labelText: 'Name'),
-                                          ),
-                                          TextField(
-                                            controller: addressController,
-                                            decoration: const InputDecoration(
-                                                labelText: 'Address'),
-                                          ),
-                                          TextField(
-                                            controller: identityPathController,
-                                            decoration: const InputDecoration(
-                                                labelText: 'Identity Path'),
-                                          ),
-                                          TextField(
-                                            controller: aboutMeController,
-                                            decoration: const InputDecoration(
-                                                labelText: 'About Me'),
-                                          ),
-                                        ],
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text("Cancel"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: const Text("Save"),
-                                          onPressed: () {
-                                            // Simpan perubahan ke Firebase Firestore
-                                            updateProfileData(
-                                              docId,
-                                              nameController.text,
-                                              addressController.text,
-                                              identityPathController.text,
-                                              aboutMeController.text,
-                                            );
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            )
-                          ],
+                        child: Text(
+                          data['name'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w500
+                          ),
                         ),
                       ),
                       Padding(
@@ -186,20 +105,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: Text(
-                          'Identity Card:',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: data['identity_path'] != null
-                            ? Image.asset(data['identity_path'])
-                            : Container(),
-                      ),
                     ],
                   ),
                 ),
@@ -207,25 +112,5 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           );
         });
-  }
-
-  Future<void> updateProfileData(
-    String docId,
-    String newName,
-    String newAddress,
-    String newIdentityPath,
-    String newAboutMe,
-  ) async {
-    try {
-      await FirebaseFirestore.instance.collection('users').doc(docId).update({
-        'name': newName,
-        'address': newAddress,
-        'identity_path': newIdentityPath,
-        'about_me': newAboutMe,
-      });
-      print('Data berhasil diupdate');
-    } catch (e) {
-      print('Terjadi kesalahan saat mengupdate data: $e');
-    }
   }
 }

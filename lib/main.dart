@@ -10,6 +10,7 @@ Future<void> main() async {
       appId: "1:456806415408:android:dd4f126a504328225281f5", 
       messagingSenderId: "456806415408", 
       projectId: "crowdfunding-project-b2944",
+      storageBucket: "crowdfunding-project-b2944.appspot.com"
     )
   );
 

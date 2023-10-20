@@ -40,11 +40,10 @@ dependencies:
   firebase_core: ^2.16.0
   get: ^4.6.1
   get_storage: ^2.0.3
-<<<<<<< HEAD
   http: ^1.1.0
-=======
   image_picker: ^1.0.4
->>>>>>> edit_page
+  firebase_storage: ^11.3.0
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +61,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

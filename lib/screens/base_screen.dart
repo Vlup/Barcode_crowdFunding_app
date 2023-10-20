@@ -1,8 +1,8 @@
 import 'package:crowdfunding/screens/discovery_screen.dart';
-import 'package:crowdfunding/screens/edit_screen.dart';
 import 'package:crowdfunding/screens/home_screen.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:crowdfunding/screens/profile_screen.dart';
+import 'package:crowdfunding/widget/edit_profile_dialog.dart';
 import 'package:flutter/material.dart';
 
 class BasePage extends StatefulWidget {
@@ -35,6 +35,7 @@ class _BasePageState extends State<BasePage> {
 
   @override
   Widget build(BuildContext context) {
+    const String docId = 'uqtyFrpmKyJzf3BT4MiQ';
     return Scaffold(
       appBar: AppBar(
           title: Text(_pageNames[_selectedIndex]),
@@ -59,7 +60,7 @@ class _BasePageState extends State<BasePage> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
-                          child: Row(children: const [
+                          child: const Row(children:  [
                             Icon(
                               Icons.logout_outlined,
                               color: Colors.black,
@@ -80,6 +81,21 @@ class _BasePageState extends State<BasePage> {
           ]),
       body: SingleChildScrollView(
         child: _selectedPage[_selectedIndex],
+      ),
+      floatingActionButton: Visibility(
+        visible: _selectedIndex == 2,
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return EditProfileDialog(docId: docId); // Pass the docId to the dialog
+                },
+            );
+          },
+          child: const Icon(Icons.edit),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
