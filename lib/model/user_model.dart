@@ -5,7 +5,6 @@ class UserModel {
   final String? phoneNumber;
   final String password;
   final String? aboutMe;
-  final String? identityPath;
   final bool isVerified;
   final String? address;
 
@@ -16,7 +15,6 @@ class UserModel {
     this.phoneNumber,
     required this.password,
     this.aboutMe,
-    this.identityPath,
     required this.isVerified,
     this.address,
   });
@@ -29,7 +27,6 @@ class UserModel {
       "phone_number": phoneNumber,
       "password": password,
       "about_me": aboutMe,
-      "identity_path": identityPath,
       "isVerified": isVerified,
       "address": address
     };

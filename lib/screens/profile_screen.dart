@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowdfunding/provider/setting_theme.dart';
+import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +12,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String docId = 'uqtyFrpmKyJzf3BT4MiQ';
   @override
   Widget build(BuildContext context) {
+    String? docId = Provider.of<UserProvider>(context).uid;
     final setting = Provider.of<ThemeModeProvider>(context);
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
@@ -72,13 +73,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       Container(
                         decoration: BoxDecoration(
                           color:
-                              data['is_verified'] ? Colors.green : Colors.red,
+                              data['is_verified'] ?? false ? Colors.green : Colors.red,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
                         child: Text(
-                          data['is_verified'] ? 'Verified' : 'Not Verified',
+                          data['is_verified'] ?? false ? 'Verified' : 'Not Verified',
                           style: const TextStyle(
                             color: Colors.white,
                           ),

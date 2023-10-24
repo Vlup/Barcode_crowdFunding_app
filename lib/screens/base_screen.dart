@@ -1,10 +1,12 @@
 import 'package:crowdfunding/provider/setting_theme.dart';
+import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:crowdfunding/screens/discovery_screen.dart';
 import 'package:crowdfunding/screens/home_screen.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:crowdfunding/screens/profile_screen.dart';
 import 'package:crowdfunding/screens/setting_screen.dart';
 import 'package:crowdfunding/widget/edit_profile_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +40,7 @@ class _BasePageState extends State<BasePage> {
 
   @override
   Widget build(BuildContext context) {
-    const String docId = 'uqtyFrpmKyJzf3BT4MiQ';
+    String? docId = Provider.of<UserProvider>(context).uid;
     final setting = Provider.of<ThemeModeProvider>(context);
     return Scaffold(
       backgroundColor: setting.backgroundColor,
@@ -58,7 +60,9 @@ class _BasePageState extends State<BasePage> {
                     PopupMenuItem(
                       child: Column(
                         children: [TextButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
+                            Provider.of<UserProvider>(context, listen: false).resetUserId();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -122,7 +126,7 @@ class _BasePageState extends State<BasePage> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return EditProfileDialog(docId: docId);
+                  return EditProfileDialog(docId: docId!);
                 },
             );
           },

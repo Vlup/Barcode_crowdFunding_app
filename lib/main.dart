@@ -1,4 +1,5 @@
 import 'package:crowdfunding/provider/setting_theme.dart';
+import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeModeProvider())
+        ChangeNotifierProvider(create: (context) => ThemeModeProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider())
       ],
       child: MaterialApp(
         title: 'Crowdfunding',

@@ -1,7 +1,10 @@
+import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:crowdfunding/screens/base_screen.dart';
 import 'package:crowdfunding/screens/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,42 +29,55 @@ class _LoginPageState extends State<LoginPage> {
     final password = passwordController.text;
 
     try {
-      final userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
-
-      if (userSnapshot.docs.isNotEmpty) {
-        final userData = userSnapshot.docs.first.data() as Map<String, dynamic>;
-        final storedPassword = userData['password'] as String;
-        if (storedPassword == password) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const BasePage(),
-            ),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Invalid email or password.'),
-              duration: Duration(milliseconds: 2000),
-            ),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('User not found.'),
-            duration: Duration(milliseconds: 2000),
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email, password: password
+      );
+      if (userCredential.user != null) {
+        Provider.of<UserProvider>(context, listen: false).setUserId(userCredential.user!.uid);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const BasePage(),
           ),
         );
       }
+
+      // final userSnapshot = await FirebaseFirestore.instance
+      //     .collection('users')
+      //     .where('email', isEqualTo: email)
+      //     .get();
+
+      // if (userSnapshot.docs.isNotEmpty) {
+      //   final userData = userSnapshot.docs.first.data() as Map<String, dynamic>;
+      //   final storedPassword = userData['password'] as String;
+      //   if (storedPassword == password) {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => const BasePage(),
+      //       ),
+      //     );
+      //   } else {
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       const SnackBar(
+      //         content: Text('Invalid email or password.'),
+      //         duration: Duration(milliseconds: 2000),
+      //       ),
+      //     );
+      //   }
+      // } else {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(
+      //       content: Text('User not found.'),
+      //       duration: Duration(milliseconds: 2000),
+      //     ),
+      //   );
+      // }
     } catch (e) {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('An error occurred. Please try again.'),
+          content: Text('Invalid email or password.'),
           duration: Duration(milliseconds: 2000),
         ),
       );

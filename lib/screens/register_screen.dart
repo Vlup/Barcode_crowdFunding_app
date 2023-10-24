@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowdfunding/model/user_model.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -40,28 +41,40 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> createUser() async {
-    final dbUser = FirebaseFirestore.instance.collection('users').doc();
-    String docID = dbUser.id;
-    final user = UserModel(
-      id: docID,
-      name: nameController.text, 
-      email: emailController.text,
-      password: passwordController.text, 
-      isVerified: false
-    );
-    await dbUser.set(user.toJson()).then((value) {
-      nameController.text = '';
-      emailController.text = '';
-      passwordController.text = '';
-      confirmpasswordController.text = '';
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Successfully Registered!'),
-          duration: Duration(milliseconds: 2000)
-        )
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+
+      final dbUser = FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid);
+      final user = UserModel(
+        id: userCredential.user!.uid,
+        name: nameController.text, 
+        email: emailController.text,
+        password: passwordController.text, 
+        isVerified: false
       );
-    });
+      await dbUser.set(user.toJson()).then((value) {
+        nameController.text = '';
+        emailController.text = '';
+        passwordController.text = '';
+        confirmpasswordController.text = '';
+        setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Successfully Registered!'),
+            duration: Duration(milliseconds: 2000)
+          )
+        );
+      });
+    } catch ($e) {
+      print($e);
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email has been registered!'),
+            duration: Duration(milliseconds: 2000)
+          )
+        );
+    }
   }
 
   void onRegisterButtonPressed(BuildContext context) {
