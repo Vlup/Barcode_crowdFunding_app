@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void onRegisterButtonPressed(BuildContext context) {
     if (isRegisterButtonEnabled()) {
-      createUser();
+      createUser(); 
     }
   }
 
