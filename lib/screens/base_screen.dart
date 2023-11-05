@@ -137,7 +137,7 @@ class _BasePageState extends State<BasePage> {
         currentIndex: _selectedIndex,
         backgroundColor: const Color.fromRGBO(243, 237, 247, 1.0),
         selectedItemColor: const Color.fromRGBO(0, 0, 0, 1),
-        unselectedItemColor: const Color.fromRGBO(0, 0, 0, 1),
+        unselectedItemColor: Color.fromARGB(255, 28, 17, 17),
         selectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.w600,
         ),
