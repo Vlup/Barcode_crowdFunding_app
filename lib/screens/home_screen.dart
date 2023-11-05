@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:crowdfunding/screens/portfolio_page.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:crowdfunding/provider/setting_theme.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: OutlinedButton(
-                        onPressed: () => null,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PortfolioPage()));
+                        },
                         child: Stack(
                           children: <Widget>[
                             Align(
