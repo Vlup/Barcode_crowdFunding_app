@@ -73,13 +73,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       Container(
                         decoration: BoxDecoration(
                           color:
-                              data['is_verified'] ?? false ? Colors.green : Colors.red,
+                              data['isVerified'] ?? false ? Colors.green : Colors.red,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
                         child: Text(
-                          data['is_verified'] ?? false ? 'Verified' : 'Not Verified',
+                          data['isVerified'] ?? false ? 'Verified' : 'Not Verified',
                           style: const TextStyle(
                             color: Colors.white,
                           ),
