@@ -31,8 +31,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Crowdfunding',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
         home: const MyHomePage(title: 'Crowdfunding'),
       ),
