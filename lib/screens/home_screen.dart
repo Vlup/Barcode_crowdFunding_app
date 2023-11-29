@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:crowdfunding/screens/portfolio_page.dart';
+import 'package:crowdfunding/screens/wallet_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:crowdfunding/provider/setting_theme.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Timer? _timer;
   List<DataPoint> dataPoints1 = [];
   List<DataPoint> dataPoints2 = [];
   List<DataPoint> dataPoints3 = [];
@@ -53,12 +55,18 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void startTimer() {
-    const duration = const Duration(seconds: 3);
-    Timer.periodic(duration, (Timer timer) {
+    const duration = Duration(seconds: 3);
+    _timer = Timer.periodic(duration, (Timer timer) {
       setState(() {
         currentIndex = (currentIndex + 1) % banners.length;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -83,10 +91,10 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-                      width: 150,
+                      width: 140,
                       height: 60,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.grey, // Color of the shadow
                             blurRadius: 4, // Spread of the shadow
@@ -99,30 +107,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: OutlinedButton(
-                        onPressed: () => null,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletPage()));
+                        },
                         child: Stack(
                           children: <Widget>[
                             Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.school,
-                                  color: setting.textColor,
-                                )),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  "My Academy",
-                                  style: TextStyle(color: setting.textColor),
-                                  textAlign: TextAlign.center,
-                                ))
+                              alignment: Alignment.centerLeft,
+                              child: Icon(
+                                Icons.wallet,
+                                color: setting.textColor,
+                              )),
+                           Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Top Up",
+                                    style: TextStyle(color: setting.textColor),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            )
                           ],
                         ),
                       )),
                   Container(
-                      width: 150,
+                      width: 140,
                       height: 60,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.grey, // Color of the shadow
                             blurRadius: 4, // Spread of the shadow
@@ -165,10 +178,10 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-                      width: 150,
+                      width: 140,
                       height: 60,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.grey, // Color of the shadow
                             blurRadius: 4, // Spread of the shadow
@@ -181,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: OutlinedButton(
-                        onPressed: () => null,
+                        onPressed: () => {},
                         child: Stack(
                           children: <Widget>[
                             Align(
@@ -204,10 +217,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )),
                   Container(
-                      width: 150,
+                      width: 140,
                       height: 60,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.grey, // Color of the shadow
                             blurRadius: 4, // Spread of the shadow
@@ -246,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 1,
             ),
             Padding(
@@ -256,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Recomended Stock",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23,  color: setting.textColor),
                   ),
                 ],
               ),
@@ -274,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
+                        child: const Text(
                           "AAPL",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -283,15 +296,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
                           // padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           width: double.infinity,
                           height: 175,
                           child: LineChart(
                             LineChartData(
+                              backgroundColor: Colors.white,
                               maxY: 5200,
                               // minY: 0,
-                              gridData: FlGridData(show: false),
-                              titlesData: FlTitlesData(show: false),
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
                               borderData: FlBorderData(
                                 show: true,
                               ),
@@ -332,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
+                        child: const Text(
                           "NFLX",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -341,15 +355,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
                           // padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           width: double.infinity,
                           height: 175,
                           child: LineChart(
                             LineChartData(
+                              backgroundColor: Colors.white,
                               maxY: 5200,
                               // minY: 0,
-                              gridData: FlGridData(show: false),
-                              titlesData: FlTitlesData(show: false),
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
                               borderData: FlBorderData(
                                 show: true,
                               ),
@@ -390,7 +405,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
+                        child: const Text(
                           "TSLA",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -399,15 +414,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
                           // padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           width: double.infinity,
                           height: 175,
                           child: LineChart(
                             LineChartData(
+                              backgroundColor: Colors.white,
                               maxY: 5200,
                               // minY: 0,
-                              gridData: FlGridData(show: false),
-                              titlesData: FlTitlesData(show: false),
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
                               borderData: FlBorderData(
                                 show: true,
                               ),
@@ -448,7 +464,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
+                        child: const Text(
                           "AMZN",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -457,15 +473,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
                           // padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           width: double.infinity,
                           height: 175,
                           child: LineChart(
                             LineChartData(
+                              backgroundColor: Colors.white,
                               maxY: 5200,
                               // minY: 0,
-                              gridData: FlGridData(show: false),
-                              titlesData: FlTitlesData(show: false),
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
                               borderData: FlBorderData(
                                 show: true,
                               ),
@@ -506,7 +523,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
+                        child: const Text(
                           "MSFT",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -515,15 +532,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
                           // padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           width: double.infinity,
                           height: 175,
                           child: LineChart(
                             LineChartData(
+                              backgroundColor: Colors.white,
                               maxY: 5200,
                               // minY: 0,
-                              gridData: FlGridData(show: false),
-                              titlesData: FlTitlesData(show: false),
+                              gridData: const FlGridData(show: false),
+                              titlesData: const FlTitlesData(show: false),
                               borderData: FlBorderData(
                                 show: true,
                               ),
@@ -561,7 +579,7 @@ class _HomePageState extends State<HomePage> {
                   enlargeCenterPage: true, // Makes the center item larger
                   autoPlay: true, // Enables auto-play
                   autoPlayInterval:
-                      Duration(seconds: 3), // Set auto-play interval
+                    const Duration(seconds: 3), // Set auto-play interval
                 ),
               ),
             )

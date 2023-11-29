@@ -38,7 +38,8 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: setting.backgroundColor,
     appBar: AppBar(
-      title: Text('Portfolio'),
+      title: const Text('Portfolio'),
+      centerTitle: true,
     ),
     body: SingleChildScrollView(
       child: Padding(
@@ -55,7 +56,7 @@ Widget build(BuildContext context) {
                 Text('Cash on T+2     : \$205.000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: setting.textColor)),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -68,18 +69,18 @@ Widget build(BuildContext context) {
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : ListView.separated(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: portfolioData['bestMatches'].length,
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (BuildContext context, int index) {
                       final match = portfolioData['bestMatches'][index];
                       return ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                         onTap: () {
                           showDialog(
                             context: context,

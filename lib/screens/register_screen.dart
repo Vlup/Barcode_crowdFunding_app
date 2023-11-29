@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowdfunding/model/user_model.dart';
+import 'package:crowdfunding/model/wallet_model.dart';
 import 'package:crowdfunding/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,6 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
         .createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
 
       final dbUser = FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid);
+      final dbWallet = FirebaseFirestore.instance.collection('wallets');
+
       final user = UserModel(
         id: userCredential.user!.uid,
         name: nameController.text, 
@@ -53,6 +56,12 @@ class _RegisterPageState extends State<RegisterPage> {
         password: passwordController.text, 
         isVerified: false
       );
+
+      final wallet = WalletModel(
+        amount: 0, 
+        userId: userCredential.user!.uid
+      );
+
       await dbUser.set(user.toJson()).then((value) {
         nameController.text = '';
         emailController.text = '';
@@ -66,11 +75,14 @@ class _RegisterPageState extends State<RegisterPage> {
           )
         );
       });
+
+      await dbWallet.add(wallet.toJson());
+
     } catch ($e) {
       print($e);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Email has been registered!'),
+            content: Text('Email has been registered before!'),
             duration: Duration(milliseconds: 2000)
           )
         );

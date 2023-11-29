@@ -25,10 +25,12 @@ class _DiscoverPageState extends State<DiscoverPage> {
   void _fetchStockData(String keyword) async {
     final result = await api.fetchStockData(keyword);
 
-    setState(() {
-      data = result;
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        data = result;
+        isLoading = false;
+      });
+    }
   }
 
   @override

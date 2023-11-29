@@ -12,7 +12,7 @@ class ThemeModeProvider extends ChangeNotifier {
 
   Color get backgroundColor {
     Color backgroundColor = _isDarkMode
-                    ? Colors.black
+                    ? Colors.grey.shade900
                     : Colors.white;
     return backgroundColor;
   }

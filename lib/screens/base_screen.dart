@@ -59,56 +59,57 @@ class _BasePageState extends State<BasePage> {
                   return [
                     PopupMenuItem(
                       child: Column(
-                        children: [TextButton(
-                          onPressed: () async {
-                            await FirebaseAuth.instance.signOut();
-                            Provider.of<UserProvider>(context, listen: false).resetUserId();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Row(children:  [
-                              Icon(
-                                Icons.logout_outlined,
-                                color: Colors.black,
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
-                              Text(
-                                'Logout',
-                                style: TextStyle(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SettingPage()));
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: const Row(children:  [
+                                Icon(
+                                  Icons.settings,
                                   color: Colors.black,
                                 ),
-                              ),
-                            ]),
+                                Padding(padding: EdgeInsets.only(left: 10)),
+                                Text(
+                                  'Setting',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ]),
+                            ),
                           ),
-                        ),
-                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SettingPage()));
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Row(children:  [
-                              Icon(
-                                Icons.settings,
-                                color: Colors.black,
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
-                              Text(
-                                'Setting',
-                                style: TextStyle(
+                          TextButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Provider.of<UserProvider>(context, listen: false).resetUserId();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()));
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: const Row(children:  [
+                                Icon(
+                                  Icons.logout_outlined,
                                   color: Colors.black,
                                 ),
-                              ),
-                            ]),
-                          ),
-                         )
+                                Padding(padding: EdgeInsets.only(left: 10)),
+                                Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          )
                         ]
                       ),
                     ),

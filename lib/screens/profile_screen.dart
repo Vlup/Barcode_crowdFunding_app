@@ -85,6 +85,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('wallets').where('userId', isEqualTo: docId).snapshots(), 
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final walletData = snapshot.data!.docs;
+                            final wallet = walletData[0].data() as Map<String, dynamic>;
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: Text(
+                                'Your Wallet: ${wallet['amount']}',
+                                style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500, color: setting.textColor),
+                              ),
+                            );
+                          }
+                          return Container();
+                        }
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: Text(
