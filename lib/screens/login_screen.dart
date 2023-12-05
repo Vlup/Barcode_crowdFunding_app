@@ -1,5 +1,6 @@
 import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:crowdfunding/screens/base_screen.dart';
+import 'package:crowdfunding/screens/forget_password.dart';
 import 'package:crowdfunding/screens/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,11 @@ class _LoginPageState extends State<LoginPage> {
     final password = passwordController.text;
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email, password: password
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
-        Provider.of<UserProvider>(context, listen: false).setUserId(userCredential.user!.uid);
+        Provider.of<UserProvider>(context, listen: false)
+            .setUserId(userCredential.user!.uid);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -53,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -70,96 +70,122 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Container(
-                      width: 315,
-                      height: 320,
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20.0, bottom: 10),
-                              child: Text(
-                                "Login", // Updated text to "Login"
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                ),
+                    width: 315,
+                    height: 340,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20.0, bottom: 10),
+                            child: Text(
+                              "Login", // Updated text to "Login"
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
-                              child: SizedBox(
-                                width: 242,
-                                height: 56,
-                                child: TextField(
-                                  controller: emailController,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Email',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
-                              child: SizedBox(
-                                width: 242,
-                                height: 56,
-                                child: TextField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Password',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: SizedBox(
                               width: 242,
                               height: 56,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromRGBO(129, 199, 132, 1),
-                                ),
-                                onPressed: () => onLoginButtonPressed(context),
-                                child: const Text(
-                                  "Login",
-                                  style: TextStyle(fontSize: 20, color: Colors.white),
+                              child: TextField(
+                                controller: emailController,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Email',
                                 ),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text("Not registered?"),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const RegisterPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    "Register",
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(129, 199, 132, 1),
-                                    ),
-                                  ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                            child: SizedBox(
+                              width: 242,
+                              height: 56,
+                              child: TextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Password',
                                 ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                    child: const Text("Forgot Password?",
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(129, 199, 132, 1),
+                                        )),
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return ForgotPasswordPage();
+                                      }));
+                                    }),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            width: 242,
+                            height: 56,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromRGBO(129, 199, 132, 1),
+                              ),
+                              onPressed: () => onLoginButtonPressed(context),
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text("Not registered?"),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(129, 199, 132, 1),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                ),
               ],
             ),
           ),
