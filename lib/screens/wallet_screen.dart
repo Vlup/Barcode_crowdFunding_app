@@ -187,6 +187,7 @@ class _WalletPageState extends State<WalletPage> {
                                                     ),
                                                   ]),
                                               ListView.builder(
+                                                reverse: true,
                                                 shrinkWrap: true,
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
