@@ -67,7 +67,6 @@ class _RegisterPageState extends State<RegisterPage> {
         emailController.text = '';
         passwordController.text = '';
         confirmpasswordController.text = '';
-        setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Successfully Registered!'),

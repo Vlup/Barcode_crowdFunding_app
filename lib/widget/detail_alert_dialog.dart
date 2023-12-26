@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowdfunding/model/alphavantage.dart';
+import 'package:crowdfunding/model/stock_model.dart';
+import 'package:crowdfunding/provider/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class DetailAlertDialog extends StatefulWidget {
   final String symbol;
@@ -12,14 +17,40 @@ class DetailAlertDialog extends StatefulWidget {
 
 class _DetailAlertDialogState extends State<DetailAlertDialog> {
   final AlphavantageApi api = AlphavantageApi();
+  final TextEditingController _stockController = TextEditingController();
   Map<String, dynamic> data = {};
   bool isLoading = true;
+  bool _validate = false;
 
   void _getDetailStock(String symbol) async {
     final result = await api.getDetailStockData(symbol);
     setState(() {
       data = result;
       isLoading = false;
+    });
+  }
+
+  void _buyStock(userId, symbol, price, share, total) async {
+    final dbStocks = FirebaseFirestore.instance.collection('stocks');
+
+    final stock = StockModel(
+      symbol: symbol,
+      price: price, 
+      share: share,
+      total: total,
+      userId: userId
+    );
+
+    await dbStocks.add(stock.toJson()).then((value) {
+      _stockController.text = '';
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Successfully Purchase Stock!'),
+          duration: Duration(milliseconds: 2000)
+        )
+      );
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
     });
   }
 
@@ -30,7 +61,14 @@ class _DetailAlertDialogState extends State<DetailAlertDialog> {
   }
 
   @override
+  void dispose() {
+    _stockController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String? userId = Provider.of<UserProvider>(context).uid;
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,12 +85,70 @@ class _DetailAlertDialogState extends State<DetailAlertDialog> {
         ],
       ],),
       actions: [
-         TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close', style: TextStyle(color: Colors.blue)),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Close', style: TextStyle(color: Colors.blue)),
+        ),
+        TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor:  Colors.blue,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
           ),
+          onPressed: () {
+            showDialog(
+              context: context, 
+              builder: (ctx) => AlertDialog(
+                title: const Text('Buy Stock'),
+                content: TextField(
+                  controller: _stockController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Stock Amount',
+                    errorText: _validate ? "Value can't be empty" : null,
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: const Text('Close', style: TextStyle(color: Colors.blue)),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor:  Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
+                    ),
+                    onPressed: () { 
+                      if (_stockController.text.isNotEmpty) {
+                        _buyStock(
+                          userId, 
+                          data['Global Quote']["01. symbol"],
+                          double.parse(data['Global Quote']["05. price"]), 
+                          double.parse(_stockController.text), 
+                          double.parse(data['Global Quote']["05. price"]) *
+                          double.parse(_stockController.text)
+                        );
+                      } else { 
+                        setState(() {
+                          _validate = _stockController.text.isEmpty;
+                        });
+                      }
+                    },
+                    child: const Text('Buy', style: TextStyle(color: Colors.white),)
+                  ),
+                ],
+              )
+            );
+          },
+          child: const Text('Buy', style: TextStyle(color: Colors.white),)
+        ),
       ],
       content: SingleChildScrollView(
         child: isLoading
