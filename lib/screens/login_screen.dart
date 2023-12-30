@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Container(
                     width: 315,
-                    height: 340,
+                    height: 350,
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),

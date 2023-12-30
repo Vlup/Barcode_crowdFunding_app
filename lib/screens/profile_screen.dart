@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Address: $address",
+                                  "Address: ${data['address'] ?? ''}",
                                   // _locationMessage,
                                   // "Longitude : ${longitude}",
                                   style: TextStyle(
