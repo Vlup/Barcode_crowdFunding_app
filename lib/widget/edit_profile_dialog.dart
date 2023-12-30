@@ -16,7 +16,6 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
   _EditProfileDialogState({required this.docId});
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
   TextEditingController aboutMeController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
 
@@ -39,10 +38,6 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
             controller: aboutMeController,
             decoration: const InputDecoration(labelText: 'About Me'),
           ),
-          TextField(
-            controller: addressController,
-            decoration: const InputDecoration(labelText: 'Address'),
-          ),
         ],
       ),
       actions: <Widget>[
@@ -59,8 +54,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
               docId,
               nameController.text,
               phoneNumberController.text,
-              addressController.text,
-              aboutMeController.text,
+              aboutMeController.text
             );
             Navigator.of(context).pop();
           },
@@ -73,14 +67,12 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
     String docId,
     String newName,
     String newPhoneNumber,
-    String newAddress,
     String newAboutMe,
   ) async {
     try {
       await FirebaseFirestore.instance.collection('users').doc(docId).update({
       'name': newName,
       'phone_number': newPhoneNumber,
-      'address': newAddress,
       'about_me': newAboutMe,
       });
       print('Data berhasil diupdate');

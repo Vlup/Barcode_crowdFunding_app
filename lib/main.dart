@@ -5,17 +5,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> main() async {
+Future<void> main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyDbL0V8GQowUq7UhbZBf-Sj0mjJaVrQUJo", 
-      appId: "1:456806415408:android:dd4f126a504328225281f5", 
-      messagingSenderId: "456806415408", 
-      projectId: "crowdfunding-project-b2944",
-      storageBucket: "crowdfunding-project-b2944.appspot.com"
-    )
-  );
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDbL0V8GQowUq7UhbZBf-Sj0mjJaVrQUJo",
+          appId: "1:456806415408:android:dd4f126a504328225281f5",
+          messagingSenderId: "456806415408",
+          projectId: "crowdfunding-project-b2944",
+          storageBucket: "crowdfunding-project-bin2944.appspot.com"));
 
   runApp(const MyApp());
 }
@@ -50,7 +48,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
