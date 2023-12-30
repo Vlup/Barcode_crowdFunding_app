@@ -179,8 +179,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Text(
                                   "Address: ${data['address'] ?? ''}",
-                                  // _locationMessage,
-                                  // "Longitude : ${longitude}",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
