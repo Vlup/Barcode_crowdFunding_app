@@ -14,15 +14,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
- String address = 'Address not available';
+  String address = '';
 
   @override
   void initState() {
     super.initState();
-    _getAddress();
   }
 
-  Future<void> _getAddress() async {
+  Future<void> _getAddress(docId) async {
   var status = await Permission.location.request();
   if (status.isGranted) {
     try {
@@ -31,6 +30,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
       setState(() {
         address = '${placemark.street}, ${placemark.locality}, ${placemark.country}';
+      });
+
+      await FirebaseFirestore.instance.collection('users').doc(docId).update({
+        'address': address,
       });
     } catch (e) {
       print('Error: $e');
@@ -187,8 +190,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: ElevatedButton(
-                          onPressed: _getAddress,
-                          child: Text('Get Address'),
+                          onPressed: () async {
+                            await _getAddress(docId);
+                          },
+                          child: const Text('Get Address'),
                         ),
                       ),
                     ],
