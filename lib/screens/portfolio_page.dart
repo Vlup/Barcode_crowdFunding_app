@@ -1,8 +1,8 @@
-import 'package:crowdfunding/model/alphavantage.dart';
 import 'package:crowdfunding/provider/setting_theme.dart';
-import 'package:crowdfunding/widget/detail_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crowdfunding/provider/user_provider.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({Key? key});
@@ -12,107 +12,230 @@ class PortfolioPage extends StatefulWidget {
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
-  final AlphavantageApi api = AlphavantageApi();
-  Map<String, dynamic> portfolioData = {};
-  bool isLoading = true;
-
   @override
-  void initState() {
-    super.initState();
-    _fetchPortfolioData('berkshire');
-  }
+  Widget build(BuildContext context) {
+    String? docId = Provider.of<UserProvider>(context).uid;
+    final setting = Provider.of<ThemeModeProvider>(context);
 
-  void _fetchPortfolioData(String symbol) async {
-    final result = await api.fetchStockData(symbol);
+    return Scaffold(
+      backgroundColor: setting.backgroundColor,
+      appBar: AppBar(
+        title: const Text('Portfolio'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('stocks')
+                    .where('userId', isEqualTo: docId)
+                    .snapshots(),
+                builder: (context, stockSnapshot) {
+                  if (stockSnapshot.hasData) {
+                    final stocksData = stockSnapshot.data!.docs;
+                    double totalStockValue = 0.0;
 
-    setState(() {
-      portfolioData = result;
-      isLoading = false;
-    });
-  }
+                    for (int i = 0; i < stocksData.length; i++) {
+                      final stock = stocksData[i].data() as Map<String, dynamic>;
+                      totalStockValue += stock['total'] ?? 0.0;
+                    }
 
-@override
-Widget build(BuildContext context) {
-  final setting = Provider.of<ThemeModeProvider>(context);
+                    return StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('wallets')
+                          .where('userId', isEqualTo: docId)
+                          .snapshots(),
+                      builder: (context, walletSnapshot) {
+                        if (walletSnapshot.hasData) {
+                          final walletsData = walletSnapshot.data!.docs;
 
-  return Scaffold(
-    backgroundColor: setting.backgroundColor,
-    appBar: AppBar(
-      title: const Text('Portfolio'),
-      centerTitle: true,
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Stock Value     : \$10.000.000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: setting.textColor)),
-                Text('Asset Value     : \$10.550.000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: setting.textColor)),
-                Text('Cash Equivalent : \$550.000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: setting.textColor)),
-                Text('Cash on T+2     : \$205.000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: setting.textColor)),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Symbol', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: setting.textColor)),
-                  Text('Average', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: setting.textColor)),
-                  Text('Shares', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: setting.textColor)),
-                  Text('Total', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: setting.textColor)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: portfolioData['bestMatches'].length,
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemBuilder: (BuildContext context, int index) {
-                      final match = portfolioData['bestMatches'][index];
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return DetailAlertDialog(symbol: match['1. symbol']);
-                            },
+                          double totalCashEquivalent = 0.0;
+                          double totalAssetValue = 0.0;
+
+                          for (int i = 0; i < walletsData.length; i++) {
+                            final wallet =
+                                walletsData[i].data() as Map<String, dynamic>;
+                            totalAssetValue = totalAssetValue + wallet['amount'] + totalStockValue;
+                            totalCashEquivalent += wallet['amount'] ?? 0.0;
+                          }
+
+                          return Column(
+                            children: [
+                              Text(
+                                'Stock Value     : Rp. ${totalStockValue.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: setting.textColor,
+                                ),
+                              ),
+                              Text(
+                                'Asset Value     : Rp. ${totalAssetValue.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: setting.textColor,
+                                ),
+                              ),
+                              Text(
+                                'Cash Equivalent : Rp. ${totalCashEquivalent.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: setting.textColor,
+                                ),
+                              ),
+                              Text(
+                                'Cash on T+2     : Rp. ${totalCashEquivalent.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: setting.textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Symbol',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: setting.textColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Average',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: setting.textColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Shares',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: setting.textColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Total',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: setting.textColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                color: setting.textColor,
+                                thickness: 2.0,
+                                height: 20.0,
+                              ),
+                              const SizedBox(height: 8),
+                            ],
                           );
-                        },
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        } else {
+                          return Container();
+                        }
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+
+              // ListView to display stock data
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('stocks')
+                    .where('userId', isEqualTo: docId)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final stocksData = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: stocksData.length,
+                      itemBuilder: (context, index) {
+                        final stock =
+                            stocksData[index].data() as Map<String, dynamic>;
+
+                        return Column(
                           children: [
-                            Expanded(
-                              child: Text('${match['1. symbol']}', textAlign: TextAlign.center, style: TextStyle(color: setting.textColor, fontSize: 14)),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${stock['symbol']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: setting.textColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Rp. ${stock['average']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: setting.textColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${stock['shares']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: setting.textColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Rp. ${stock['total']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: setting.textColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Expanded(
-                              child: Text('\$500', textAlign: TextAlign.center, style: TextStyle(color: setting.textColor, fontSize: 14)),
-                            ),
-                            Expanded(
-                              child: Text('2000', textAlign: TextAlign.center,style: TextStyle(color: setting.textColor, fontSize: 14)),
-                            ),
-                            Expanded(
-                              child: Text('\$1.000.000', textAlign: TextAlign.center,style: TextStyle(color: setting.textColor, fontSize: 14)),
+                            Divider(
+                              color: setting.textColor,
+                              thickness: 1.0,
+                              height: 10.0,
                             ),
                           ],
-                        ),
-                      );
-                    },
-                  ),
-          ],
+                        );
+                      },
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
