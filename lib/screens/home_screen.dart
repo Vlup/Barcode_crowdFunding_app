@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
 
   int currentIndex = 0;
   List<String> banners = [
-    'images/CFB1.jpg',
-    'images/CFB2.jpg',
-    'images/CFB3.jpg'
+    'assets/images/CFB1.jpg',
+    'assets/images/CFB2.jpg',
+    'assets/images/CFB3.jpg'
   ];
 
   void startTimer() {
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-                      width: 140,
+                      width: 130,
                       height: 60,
                       decoration: BoxDecoration(
                         boxShadow: const [
@@ -166,93 +166,6 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(color: setting.textColor),
                                   textAlign: TextAlign.center,
                                 ))
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
-                          ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          width: 0.7,
-                        ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () => {},
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.shopping_cart,
-                                  color: setting.textColor,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Quick Buy",
-                                    style: TextStyle(color: setting.textColor),
-                                    textAlign: TextAlign.center,
-                                  )),
-                            )
-                          ],
-                        ),
-                      )),
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
-                          ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          color: setting.textColor,
-                          width: 0.7,
-                        ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () => null,
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.sell,
-                                  color: setting.textColor,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Quick Sell",
-                                    style: TextStyle(color: setting.textColor),
-                                    textAlign: TextAlign.center,
-                                  )),
-                            )
                           ],
                         ),
                       )),

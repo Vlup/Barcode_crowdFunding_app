@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -25,7 +24,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return const AlertDialog(
               content: Text("Password reset link sent! Check your email"),
             );
           });
@@ -51,14 +50,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             "images/Logo.png",
             // "assets/images/Logo.png" - NB: use this one when building an APK
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Text(
               "Enter Yout Email and we will send you a password reset link",
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
@@ -81,22 +80,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               onPressed: () {
                 passwordReset();
               },
+              color: const Color.fromRGBO(129, 199, 132, 1),
               child: const Text(
                 "Reset Password",
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
-              color: const Color.fromRGBO(129, 199, 132, 1),
             ),
           ),
           MaterialButton(
             onPressed: () {
               Navigator.pop(context);
             },
+            color: Colors.blue,
             child: const Text(
               "Back",
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            color: Colors.blue,
           )
         ],
       ),

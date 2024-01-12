@@ -30,28 +30,65 @@ class _DetailAlertDialogState extends State<DetailAlertDialog> {
     });
   }
 
-  void _buyStock(userId, symbol, price, share, total) async {
+  void _buyStock(userId, symbol, double price, double share, double total) async {
     final dbStocks = FirebaseFirestore.instance.collection('stocks');
+    try {
+      QuerySnapshot walletSnapshot = await FirebaseFirestore.instance
+        .collection('wallets')
+        .where('userId', isEqualTo: userId)
+        .get();
 
-    final stock = StockModel(
-      symbol: symbol,
-      price: price, 
-      share: share,
-      total: total,
-      userId: userId
-    );
+      if (walletSnapshot.docs.isNotEmpty &&
+          (walletSnapshot.docs[0]['amount'] ?? 0) >= total
+      ) {
+        DocumentSnapshot walletDocument = walletSnapshot.docs[0];
+        double currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
+        double newTotalAmount = currentAmount - total;
+        await walletDocument.reference.update({'amount': newTotalAmount});
 
-    await dbStocks.add(stock.toJson()).then((value) {
-      _stockController.text = '';
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Successfully Purchase Stock!'),
-          duration: Duration(milliseconds: 2000)
-        )
-      );
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-    });
+        final stock = StockModel(
+          symbol: symbol,
+          price: price, 
+          share: share,
+          total: total,
+          userId: userId
+        );
+
+        await FirebaseFirestore.instance.collection('wallet_histories').add({
+          'userId': userId,
+          'amount': total,
+          'description': "Buying stock",
+          'timestamp': FieldValue.serverTimestamp(),
+          'type': 'debit',
+        });
+
+        await dbStocks.add(stock.toJson()).then((value) {
+          _stockController.text = '';
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Successfully Purchase Stock!'),
+              duration: Duration(milliseconds: 2000)
+            )
+          );
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to purchase stock! Insufficient Wallet'),
+            duration: Duration(milliseconds: 2000)
+          )
+        );
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      }
+
+      
+
+    } catch (e) {
+      print('Terjadi kesalahan saat mengupdate data: $e');
+    }
   }
 
   @override

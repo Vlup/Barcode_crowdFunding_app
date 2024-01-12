@@ -64,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  "images/Logo.png",
-                  // "assets/images/Logo.png" - NB: use this one when building an APK
+                  "assets/images/Logo.png",
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -134,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onTap: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return ForgotPasswordPage();
+                                        return const ForgotPasswordPage();
                                       }));
                                     }),
                               ],
