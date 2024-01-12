@@ -87,11 +87,9 @@ class _TopUpDialogState extends State<TopUpDialog> {
       if (walletSnapshot.docs.isNotEmpty) {
         DocumentSnapshot walletDocument = walletSnapshot.docs[0];
         int currentAmount = walletSnapshot.docs[0]['amount'] ?? 0;
-        print(currentAmount);
         int newTotalAmount = currentAmount + topUpAmount;
         await walletDocument.reference.update({'amount': newTotalAmount});
       }
-      ;
       print('Top Up Berhasil');
     } catch (e) {
       print('Terjadi kesalahan saat mengupdate data: $e');

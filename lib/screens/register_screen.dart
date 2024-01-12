@@ -106,14 +106,14 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                    "images/Logo.png"
+                    "assets/images/Logo.png"
                     // "assets/images/Logo.png"    - NB: use this one when build apk 
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Container(
                     width: 315,
-                    height: 470,
+                    height: 480,
                     decoration: BoxDecoration(
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(10)),

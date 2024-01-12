@@ -8,7 +8,6 @@ class AlphavantageApi {
   Future<Map<String, dynamic>> fetchStockData(String symbol) async {
     final url = Uri.parse('$baseUrl?function=SYMBOL_SEARCH&keywords=$symbol&apikey=$apiKey');
     final response = await http.get(url);
-    print('API Response Status Code: ${response.statusCode}');
     if (response.statusCode == 200) {
       final data =  json.decode(response.body);
       return data;

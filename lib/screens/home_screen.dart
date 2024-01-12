@@ -90,85 +90,92 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
-                          ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          width: 0.7,
-                        ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletPage()));
-                        },
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Icon(
-                                Icons.wallet,
-                                color: setting.textColor,
-                              )),
-                           Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Top Up",
-                                    style: TextStyle(color: setting.textColor,fontSize: 12),
-                                    textAlign: TextAlign.center,
-                                  )),
-                            )
+                  SizedBox(width: 20,),
+                  Expanded(
+                    child: Container(
+                        width: 130,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey, // Color of the shadow
+                              blurRadius: 4, // Spread of the shadow
+                              offset: Offset(0, 2), // Offset of the shadow
+                            ),
                           ],
-                        ),
-                      )),
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
+                          color: const Color.fromRGBO(129, 199, 132, 1),
+                          border: Border.all(
+                            width: 0.7,
                           ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          width: 0.7,
                         ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PortfolioPage()));
-                        },
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletPage()));
+                          },
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
                                 alignment: Alignment.centerLeft,
                                 child: Icon(
-                                  Icons.assignment,
+                                  Icons.wallet,
                                   color: setting.textColor,
                                 )),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  "My Portfolio",
-                                  style: TextStyle(color: setting.textColor,fontSize: 12),
-                                  textAlign: TextAlign.center,
-                                ))
+                             Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Top Up",
+                                      style: TextStyle(color: setting.textColor,fontSize: 12),
+                                      textAlign: TextAlign.center,
+                                    )),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                  SizedBox(width: 20,),
+                  Expanded(
+                    child: Container(
+                        width: 140,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey, // Color of the shadow
+                              blurRadius: 4, // Spread of the shadow
+                              offset: Offset(0, 2), // Offset of the shadow
+                            ),
                           ],
+                          color: const Color.fromRGBO(129, 199, 132, 1),
+                          border: Border.all(
+                            width: 0.7,
+                          ),
                         ),
-                      )),
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const PortfolioPage()));
+                          },
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.assignment,
+                                    color: setting.textColor,
+                                  )),
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    "My Portfolio",
+                                    style: TextStyle(color: setting.textColor,fontSize: 12),
+                                    textAlign: TextAlign.center,
+                                  ))
+                            ],
+                          ),
+                        )),
+                  ),
+                  SizedBox(width: 20,),
                 ],
               ),
             ),
@@ -177,85 +184,92 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
-                          ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          width: 0.7,
-                        ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () => {},
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.shopping_cart,
-                                  color: setting.textColor,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Quick Buy",
-                                    style: TextStyle(color: setting.textColor,fontSize: 12),
-                                    textAlign: TextAlign.center,
-                                  )),
-                            )
+                  SizedBox(width: 20,),
+                  Expanded(
+                    child: Container(
+                        width: 140,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              // color: Colors.grey, // Color of the shadow
+                              blurRadius: 4, // Spread of the shadow
+                              offset: Offset(0, 2), // Offset of the shadow
+                            ),
                           ],
-                        ),
-                      )),
-                  Container(
-                      width: 140,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Color of the shadow
-                            blurRadius: 4, // Spread of the shadow
-                            offset: Offset(0, 2), // Offset of the shadow
+                          color: const Color.fromRGBO(129, 199, 132, 1),
+                          border: Border.all(
+                            width: 0.7,
                           ),
-                        ],
-                        color: const Color.fromRGBO(129, 199, 132, 1),
-                        border: Border.all(
-                          color: setting.textColor,
-                          width: 0.7,
                         ),
-                      ),
-                      child: OutlinedButton(
-                        onPressed: () => null,
-                        child: Stack(
-                          children: <Widget>[
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.sell,
-                                  color: setting.textColor,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Quick Sell",
-                                    style: TextStyle(color: setting.textColor,fontSize: 12),
-                                    textAlign: TextAlign.center,
+                        child: OutlinedButton(
+                          onPressed: () => {},
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.shopping_cart,
+                                    color: setting.textColor,
                                   )),
-                            )
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Quick Buy",
+                                      style: TextStyle(color: setting.textColor),
+                                      textAlign: TextAlign.center,
+                                    )),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                  SizedBox(width: 20,),
+                  Expanded(
+                    child: Container(
+                        width: 140,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey, // Color of the shadow
+                              blurRadius: 4, // Spread of the shadow
+                              offset: Offset(0, 2), // Offset of the shadow
+                            ),
                           ],
+                          color: const Color.fromRGBO(129, 199, 132, 1),
+                          border: Border.all(
+                            color: setting.textColor,
+                            width: 0.7,
+                          ),
                         ),
-                      )),
+                        child: OutlinedButton(
+                          onPressed: () => null,
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.sell,
+                                    color: setting.textColor,
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Quick Sell",
+                                      style: TextStyle(color: setting.textColor),
+                                      textAlign: TextAlign.center,
+                                    )),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                  SizedBox(width: 20,),
                 ],
               ),
             ),
