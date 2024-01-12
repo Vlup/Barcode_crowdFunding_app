@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      //name: "CrowdFunding",
+      name: "CrowdFunding",
       options: const FirebaseOptions(
           apiKey: "AIzaSyDbL0V8GQowUq7UhbZBf-Sj0mjJaVrQUJo",
           appId: "1:456806415408:android:dd4f126a504328225281f5",

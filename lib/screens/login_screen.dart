@@ -64,14 +64,14 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  "images/Logo.png",
+                  "assets/images/Logo.png",
                   // "assets/images/Logo.png" - NB: use this one when building an APK
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Container(
                     width: 315,
-                    height: 350,
+                    height: 370,
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),

@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
 
   int currentIndex = 0;
   List<String> banners = [
-    'images/CFB1.jpg',
-    'images/CFB2.jpg',
-    'images/CFB3.jpg'
+    'assets/images/CFB1.jpg',
+    'assets/images/CFB2.jpg',
+    'assets/images/CFB3.jpg'
   ];
 
   void startTimer() {
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Top Up",
-                                    style: TextStyle(color: setting.textColor),
+                                    style: TextStyle(color: setting.textColor,fontSize: 12),
                                     textAlign: TextAlign.center,
                                   )),
                             )
@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   "My Portfolio",
-                                  style: TextStyle(color: setting.textColor),
+                                  style: TextStyle(color: setting.textColor,fontSize: 12),
                                   textAlign: TextAlign.center,
                                 ))
                           ],
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Quick Buy",
-                                    style: TextStyle(color: setting.textColor),
+                                    style: TextStyle(color: setting.textColor,fontSize: 12),
                                     textAlign: TextAlign.center,
                                   )),
                             )
@@ -249,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Quick Sell",
-                                    style: TextStyle(color: setting.textColor),
+                                    style: TextStyle(color: setting.textColor,fontSize: 12),
                                     textAlign: TextAlign.center,
                                   )),
                             )
