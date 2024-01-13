@@ -19,9 +19,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
  
   void _sellStock(String stockId, String symbol, String userId) async {
     Map<String, dynamic> data = await api.getDetailStockData(symbol);
-    double price = double.parse(data['Global Quote']["05. price"]);
-    double shares = double.parse(_stockController.text);
-    double totalAmount = price * shares;
+    num price = num.parse(data['Global Quote']["05. price"]);
+    num shares = num.parse(_stockController.text);
+    num totalAmount = price * shares;
 
     try {
       QuerySnapshot walletSnapshot = await FirebaseFirestore.instance
@@ -31,8 +31,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
       if (walletSnapshot.docs.isNotEmpty) {
         DocumentSnapshot walletDocument = walletSnapshot.docs[0];
-        double currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
-        double newTotalAmount = currentAmount + totalAmount;
+        num currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
+        num newTotalAmount = currentAmount + totalAmount;
         await walletDocument.reference.update({'amount': newTotalAmount});
       }
 
@@ -41,8 +41,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
         .doc(stockId)
         .get();
         
-      int currentShares = stockSnapshot['share'] ?? 0;
-      double newShares = currentShares - shares;
+      num currentShares = stockSnapshot['share'] ?? 0;
+      num newShares = currentShares - shares;
 
       if (newShares <= 0) {
         await FirebaseFirestore.instance.collection('stocks').doc(stockId).delete();

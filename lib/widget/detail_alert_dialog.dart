@@ -42,8 +42,8 @@ class _DetailAlertDialogState extends State<DetailAlertDialog> {
           (walletSnapshot.docs[0]['amount'] ?? 0) >= total
       ) {
         DocumentSnapshot walletDocument = walletSnapshot.docs[0];
-        double currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
-        double newTotalAmount = currentAmount - total;
+        num currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
+        num newTotalAmount = currentAmount - total;
         await walletDocument.reference.update({'amount': newTotalAmount});
 
         final stock = StockModel(

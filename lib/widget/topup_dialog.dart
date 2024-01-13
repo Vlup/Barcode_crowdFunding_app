@@ -70,7 +70,7 @@ class _TopUpDialogState extends State<TopUpDialog> {
     String type,
   ) async {
     try {
-      double topUpAmount = double.parse(amount);
+      num topUpAmount = num.parse(amount);
       await FirebaseFirestore.instance.collection('wallet_histories').add({
         'userId': docId,
         'amount': topUpAmount,
@@ -86,8 +86,8 @@ class _TopUpDialogState extends State<TopUpDialog> {
 
       if (walletSnapshot.docs.isNotEmpty) {
         DocumentSnapshot walletDocument = walletSnapshot.docs[0];
-        double currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
-        double newTotalAmount = currentAmount + topUpAmount;
+        num currentAmount = walletSnapshot.docs[0]['amount'] ?? 0.0;
+        num newTotalAmount = currentAmount + topUpAmount;
         await walletDocument.reference.update({'amount': newTotalAmount});
       }
       print('Top Up Berhasil');
